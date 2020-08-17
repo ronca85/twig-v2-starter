@@ -1,0 +1,70 @@
+{% macro list( items ) %}
+
+	{% for item in items %}
+
+		{% if loop.first %}
+			{% if item.level == 0 %}
+				<div class="o-list-wrap || js-page-nav" data-collapsed="true">
+					<div class="o-background"></div>
+					<ul class="o-list || c-nav_list" id="webaim-primary-nav">
+			{% else %}
+				<div class="o-list-wrap" data-collapsed="true" style="height: 0px;">
+					{# <div class="o-background -level_{{ item.level }}"></div> #}
+					<ul class="o-list || c-nav_list_nested c-nav_list_level_{{ item.level }}">
+			{% endif %}
+		{% endif %}
+
+		{# set vars for class names to null at the start. also reset vars to null for each item. without the reset classes get applied to all following items #}
+		{% set current_item = null %}
+		{% set current_item_parent = null %}
+		{% set current_item_ancestors = null %}
+		{% set current_item_ancestor_top_level = null %}
+
+		{# set current class for nav item representing the current page #}
+		{% if ( item.current ) %}
+			{% set current_item = ' is-current' %}
+		{% endif %}
+
+		{# set current class for parent nav items of the current page #}
+		{% if ( item.current_item_parent ) %}
+			{% set current_item_parent = ' is-current-parent' %}
+		{% endif %}
+
+		{# set current class for all ancestor nav items of the current page #}
+		{% if ( item.current_item_ancestor ) %}
+			{% set current_item_ancestors = ' is-current-ancestor' %}
+		{% endif %}
+
+		{# set current class for top level nav item ancestor of the current page #}
+		{% if ( item.level == 0 and item.current_item_ancestor ) %}
+			{% set current_item_ancestor_top_level = ' is-current-top-level' %}
+		{% endif %}
+
+		<li class="c-nav_list_item o-list_item{{ current_item }}{{ current_item_parent }}{{ current_item_ancestors }}{{ current_item_ancestor_top_level }}">
+			<div class="c-nav_list_item_header">
+				<div class="c-nav-link-wrap">
+					<a class="c-nav-link -level_{{ item.level }}" href="{{ item.link }}" aria-haspopup="true" aria-expanded="false">{{ item.name }}</a>
+				</div>
+				{% if item.children %}
+					{% import _self as recursive %}
+					<button class="c-nav_menu_button || o-button || js-menu-button" aria-expanded="false">
+						<span class="o-ratio"></span>
+						<span class="sr-hidden-but-there">Show {{ item }} submenu</span>
+						<span class="c-nav_menu_button_inner || o-button_label">+</span>
+					</button>
+				{% endif %}
+			</div>
+			
+			{% if item.children %}
+				{% import _self as recursive %}
+				{{ recursive.list(item.children) }}
+			{% endif %}
+		</li>
+		
+		{% if loop.last %}
+		</ul>
+		</div>
+		{% endif %}
+	{% endfor %}
+
+{% endmacro %}

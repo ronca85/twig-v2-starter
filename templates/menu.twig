@@ -1,10 +1,11 @@
+{% import 'macros/recursive_submenu.twig' as tree %}
+
 {% if menu %}
-	<ul>
-	{% for item in items %}
-		<li class="{{ item.classes | join(' ') }}">
-			<a target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
-			{% include "menu.twig" with {'items': item.children} %}
-		</li>
-	{% endfor %}
-	</ul>
+<button class="c-header_menu_toggle || o-button || js-page-nav-toggle">
+	<span class="o-button_label">Menu</span>
+</button>
+
+<nav class="c-nav">
+	{{ tree.list(menu.items) }}
+</nav>
 {% endif %}

@@ -165,3 +165,36 @@ class StarterSite extends Timber\Site {
 }
 
 new StarterSite();
+
+
+
+
+
+
+/*
+	My Functions
+*/
+
+function add_theme_scripts() {
+	wp_enqueue_style( 'app', get_template_directory_uri() . '/www/assets/styles/main.css', array(), '57404c0aec2c8ada1e8e119926e680d2', 'all' );
+	wp_enqueue_script( 'wicg_inert', 'https://unpkg.com/wicg-inert@3.0.3/dist/inert.min.js', null, null, true );
+	wp_enqueue_script( 'app', get_template_directory_uri() . '/www/assets/scripts/app.js', array(), 'f45c056887ce884edb0c7d72d80be0d8', true );
+}
+add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
+
+// 'my_acf_op_init' adds options box to the wordpress dashboard sidebar
+add_action('acf/init', 'my_acf_op_init');
+function my_acf_op_init() {
+	if( function_exists('acf_add_options_page') ) {
+		acf_add_options_page();
+		acf_add_options_sub_page('Contact Info');
+		acf_add_options_sub_page('Search - no results');
+	}
+}
+
+// include this in order to use ACF options page in any template
+add_filter( 'timber_context', 'mytheme_timber_context'  );
+function mytheme_timber_context( $context ) {
+	// $context['options'] = get_fields('option');
+	return $context;
+}

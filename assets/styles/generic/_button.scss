@@ -20,7 +20,7 @@ button,
     overflow: visible; /* [2] */
     margin: 0; /* [3] */
     padding: 0;
-    outline: 0;
+    // outline: 0; // removed to test keyboard navigation
     border: 0;
     background: none transparent;
     color: inherit;

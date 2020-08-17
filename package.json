@@ -10,6 +10,8 @@
     "compile": "gulp compile"
   },
   "dependencies": {
+    "@barba/core": "^2.9.7",
+    "regenerator-runtime": "^0.13.5",
     "locomotive-scroll": "*",
     "modujs": "*",
     "modularload": "*",

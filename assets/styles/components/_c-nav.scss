@@ -1,0 +1,104 @@
+$button_size: 42px;
+$edge_offset: 12px;
+
+$hue: 354deg;
+$saturation: 66%;
+$lightness: 42%;
+
+.is-current {
+	color: red;
+}
+
+.c-nav {}
+
+.o-list-wrap {
+	position: relative;
+	overflow: hidden;
+	transition: height .5s cubic-bezier(0.4, 0, 0, 1);
+}
+
+.o-background {
+	background-color: pink;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	transform-origin: top left;
+	transform: scaleY(0) skewY(-45deg);
+	transition: transform .5s cubic-bezier(0.4, 0, 0, 1);
+
+	.is-open > & {
+		transform: scaleY(1);
+	}
+}
+
+.c-nav_list {
+	// resets 
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+@for $i from 1 through 6 {
+	.c-nav_list_level_#{$i} {
+		$lightness: $lightness - $i * 4;
+		background: hsl( $hue, $saturation, $lightness );
+		
+		.c-nav-link.-level_#{$i} {
+			transform: translateY(-100%) skewY(-22deg);
+			transform-origin: left;
+			transition: transform .65s cubic-bezier(0.4, 0, 0, 1);
+
+			.is-open > & {
+				transform: none;
+			}
+		}
+	}
+}
+
+.c-nav_list_item {
+	// box-shadow: inset 0 -1px 0 0 black;
+	// overflow: hidden;
+}
+
+.c-nav_list_item_header {
+	position: relative;
+
+	.c-nav-link {
+		padding: $edge_offset;
+		display: inline-block;
+	}
+}
+
+.c-nav-link-wrap {
+	overflow: hidden;
+}
+
+.c-nav_menu_button {
+	// resets
+	background: transparent;
+	padding: 0;
+	// styles
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+	width: $button_size;
+	margin-right: $edge_offset;
+	// tests
+	border: 2px solid black;
+}
+
+.c-nav_menu_button_inner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.o-ratio {
+	display: block;
+	padding-top: 100%;
+}

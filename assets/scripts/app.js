@@ -1,6 +1,6 @@
 import modular from 'modujs';
-import * as modules from './modules';
 import globals from './globals';
+import * as modules from './modules';
 import { html } from './utils/environment';
 
 const app = new modular({
@@ -8,7 +8,8 @@ const app = new modular({
 });
 
 window.onload = (event) => {
-    const $style = document.getElementById("stylesheet");
+    // const $style = document.getElementById("stylesheet");
+    const $style = document.getElementById("app-css");
 
     if ($style.isLoaded) {
         init();
